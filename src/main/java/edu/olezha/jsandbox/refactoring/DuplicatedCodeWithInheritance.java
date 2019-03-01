@@ -1,8 +1,14 @@
 package edu.olezha.jsandbox.refactoring;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 class A {
 
     private String some;
@@ -12,6 +18,9 @@ class A {
     }
 }
 
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 class B extends A {
 
     private String other;
@@ -22,24 +31,31 @@ class B extends A {
     }
 }
 
+@Slf4j
 public class DuplicatedCodeWithInheritance {
 
-    public List<A> processA() {
-        return process(true);
+    public static void main(String[] args) {
+        DuplicatedCodeWithInheritance dup = new DuplicatedCodeWithInheritance();
+        log.info("{} {}", dup.processA(), dup.processB());
     }
 
-    public List<B> processB() {
-        return process(false);
+    private List<A> processA() {
+        return process(A.class);
     }
 
-    private List process(boolean isA) {
-        List list = new ArrayList<>();
+    private List<B> processB() {
+        return process(B.class);
+    }
+
+    private List process(Class<? extends A> clazz) {
+        List list = new ArrayList();
         for (int i = 0; i < 3; i++) {
             String some = get(i);
 
-            if (isA) {
+            if (clazz == A.class) {
                 list.add(new A(some));
-            } else {
+            }
+            else if (clazz == B.class) {
                 String other = get(i);
                 list.add(new B(some, other));
             }
