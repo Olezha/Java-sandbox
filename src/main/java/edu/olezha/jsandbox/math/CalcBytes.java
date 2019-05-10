@@ -1,6 +1,6 @@
 package edu.olezha.jsandbox.math;
 
-public class Calc {
+public class CalcBytes {
 
     static final int KiB = 1024;
     static final int MiB = KiB * KiB;
