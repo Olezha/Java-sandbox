@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
  */
 public class MathTest {
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
     private static final double delta = .003;
-=======
-    private static final double delta = .002;
->>>>>>> 429d1e78be643f0579631365258bedc4c064ba5f
+//=======
+//    private static final double delta = .002;
+//>>>>>>> 429d1e78be643f0579631365258bedc4c064ba5f
 
     @BeforeClass
     public static void beforeClass() {
