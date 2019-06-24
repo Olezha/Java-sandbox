@@ -14,3 +14,9 @@
 target/
 log/
 bin/
+doc/*.aux
+doc/*.dvi
+*.log
+doc/*.ps
+doc/*.fls
+doc/*.fdb_latexmk
