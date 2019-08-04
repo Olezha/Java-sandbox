@@ -39,20 +39,22 @@ public class Main {
     }
 
     private static void readZip(File file) throws IOException {
-        ZipFile zipFile = new ZipFile(file);
-        for (Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-             enumeration.hasMoreElements();) {
-            ZipEntry zipEntry = enumeration.nextElement();
-            log.info("Entry: {}", zipEntry);
+        try (ZipFile zipFile = new ZipFile(file)) {
+            for (Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+                 enumeration.hasMoreElements(); ) {
+                ZipEntry zipEntry = enumeration.nextElement();
+                log.info("Entry: {}", zipEntry);
 
-            if (!zipEntry.isDirectory()) {
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(
-                                zipFile.getInputStream(zipEntry)));
-                log.info("    {}", bufferedReader.readLine());
+                if (!zipEntry.isDirectory()) {
+                    try (BufferedReader bufferedReader = new BufferedReader(
+                            new InputStreamReader(
+                                    zipFile.getInputStream(zipEntry)))) {
+                        log.info("    {}", bufferedReader.readLine());
+                    }
+                }
             }
-        }
 
-        zipFile.stream().forEach(s -> log.info("{}", s));
+            zipFile.stream().forEach(s -> log.info("{}", s));
+        }
     }
 }

@@ -34,3 +34,9 @@ class ExpensiveObject {
         }
     }
 }
+
+/*
+ * put-if-missing race condition:
+ *   if (!vector.contains(element))
+ *       vector.add(element);
+ */
