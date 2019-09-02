@@ -1,0 +1,5 @@
+su - postgres
+psql
+
+\l
+\c name
