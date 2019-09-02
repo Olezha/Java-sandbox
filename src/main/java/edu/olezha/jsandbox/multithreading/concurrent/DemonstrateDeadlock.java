@@ -10,6 +10,7 @@ public class DemonstrateDeadlock {
 
 //    private static final Object tieLock = new Object();
 
+    // try dump threads
     public static void main(String[] args) {
         final Random rnd = new Random();
 
