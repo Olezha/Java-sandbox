@@ -1,5 +1,8 @@
 package edu.olezha.jsandbox.multithreading.concurrent;
 
+import edu.olezha.jsandbox.multithreading.concurrent.model.Account;
+import edu.olezha.jsandbox.multithreading.concurrent.model.DollarAmount;
+
 import java.util.Random;
 
 public class DemonstrateDeadlock {
@@ -29,7 +32,7 @@ public class DemonstrateDeadlock {
 
                     try {
                         transferMoney(accounts[fromAcct], accounts[toAcct], amount);
-                    } catch (InsufficientFundsException e) {
+                    } catch (DollarAmount.InsufficientFundsException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -40,12 +43,12 @@ public class DemonstrateDeadlock {
             new TransferThread().start();
     }
 
-    private static void transferMoney(Account from, Account to, DollarAmount amount) throws InsufficientFundsException {
+    private static void transferMoney(Account from, Account to, DollarAmount amount) throws DollarAmount.InsufficientFundsException {
         class Helper {
 
-            private void transfer() throws InsufficientFundsException {
+            private void transfer() throws DollarAmount.InsufficientFundsException {
                 if (from.getBalance().compareTo(amount) < 0)
-                    throw new InsufficientFundsException();
+                    throw new DollarAmount.InsufficientFundsException();
                 else {
                     from.debit(amount);
                     to.credit(amount);
@@ -77,57 +80,5 @@ public class DemonstrateDeadlock {
 //                }
 //            }
 //        }
-    }
-}
-
-class Account {
-
-    private DollarAmount dollarAmount;
-
-    Account(DollarAmount dollarAmount) {
-        this.dollarAmount = dollarAmount;
-    }
-
-    DollarAmount getBalance() {
-        return dollarAmount;
-    }
-
-    void debit(DollarAmount dollarAmount) {
-        System.out.println(this + " debit");
-        dollarAmount.debit(dollarAmount);
-    }
-
-    void credit(DollarAmount dollarAmount) {
-        System.out.println(this + " credit");
-        dollarAmount.credit(dollarAmount);
-    }
-}
-
-class DollarAmount implements Comparable<DollarAmount> {
-
-    private int amount;
-
-    DollarAmount(int amount) {
-        this.amount = amount;
-    }
-
-    @Override
-    public int compareTo(DollarAmount o) {
-        return amount - o.amount;
-    }
-
-    void debit(DollarAmount dollarAmount) {
-        amount -= dollarAmount.amount;
-    }
-
-    void credit(DollarAmount dollarAmount) {
-        amount += dollarAmount.amount;
-    }
-}
-
-class InsufficientFundsException extends Exception {
-
-    InsufficientFundsException() {
-        super("Insufficient Funds");
     }
 }

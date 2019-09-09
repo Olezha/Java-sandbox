@@ -3,6 +3,10 @@ package edu.olezha.jsandbox.multithreading.concurrent;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple RNG
+ * useful for tests
+ */
 public class RNG {
 
     public static void main(String[] args) {
