@@ -33,6 +33,10 @@ public class RNG {
         System.out.println((double) duplicates * 100 / ITERATIONS);
     }
 
+    public static int random() {
+        return xorShift((int) System.nanoTime());
+    }
+
     private static int xorShift(int y) {
         y ^= (y << 6);
         y ^= (y >>> 21);
