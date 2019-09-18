@@ -2,13 +2,14 @@ package edu.olezha.jsandbox.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by oleh on 24.12.17.
  */
 @Data
-public class Person {
+public class Person implements Serializable {
 
     private Long id;
     private String name;
