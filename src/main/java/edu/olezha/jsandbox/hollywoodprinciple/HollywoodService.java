@@ -5,8 +5,7 @@ import java.util.stream.Collectors;
 
 public class HollywoodService {
 
-    public static List<Agent> getFriendlyAgents() {
-        AgentFinder agentFinder = new SpreadsheetAgentFinder();
+    public static List<Agent> getFriendlyAgents(AgentFinder agentFinder) {
         List<Agent> agents = agentFinder.findAllAgents();
         return filterAgents(agents, "friendly");
     }
