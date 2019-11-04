@@ -41,6 +41,6 @@ public class TicketRevenueTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failIfMoreThanSeatsInTheTheaterTicketsAreSold() {
-        venueRevenue.estimateTotalRevenue(101);
+        venueRevenue.estimateTotalRevenue(TicketRevenue.SEATS_IN_THEATER + 1);
     }
 }
