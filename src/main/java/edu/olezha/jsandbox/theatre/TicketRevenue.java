@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 
 public class TicketRevenue {
 
-    public BigDecimal estimateTotalRevenue(int n) {
-        if (n == 1) {
-            return new BigDecimal("30");
-        }
+    public static final int TICKET_PRICE = 30;
 
-        return BigDecimal.ZERO;
+    public BigDecimal estimateTotalRevenue(int n) {
+        return new BigDecimal(TICKET_PRICE * n);
     }
 }
