@@ -68,5 +68,3 @@
       (recur (inc ctr))
       ctr
       )))
-
-(println "10.3.2")
