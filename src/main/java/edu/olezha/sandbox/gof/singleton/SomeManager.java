@@ -9,10 +9,9 @@ public class SomeManager {
 
     private SomeManager() {}
 
-    public static SomeManager getInstance() {
+    public static synchronized SomeManager getInstance() {
         if (instance == null)
             instance = new SomeManager();
         return instance;
     }
-
 }

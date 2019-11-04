@@ -11,5 +11,4 @@ public class BillPughSingleton {
     private static class Holder {
         private static final BillPughSingleton INSTANCE = new BillPughSingleton();
     }
-
 }
