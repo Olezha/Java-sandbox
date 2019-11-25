@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class App {
 
-    private static final int NETWORK_SIZE = 1_000;
-    private static final int MAXIMUM_NUMBER_OF_PEERS = 12;
+    public static final int NETWORK_SIZE = 7_000;
+    public static final int MAXIMUM_NUMBER_OF_PEERS = 12;
 
     public static void main(String[] args) {
         List<Node> nodes = new ArrayList<>(NETWORK_SIZE);
@@ -26,5 +26,8 @@ public class App {
         }
 
         Node myNode = nodes.get(random.nextInt(nodes.size()));
+        for (int i = 0; i < 20; i++) {
+            myNode.fetch(new Request(random.nextInt(nodes.size())));
+        }
     }
 }
