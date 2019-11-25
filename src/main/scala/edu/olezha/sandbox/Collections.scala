@@ -1,7 +1,5 @@
 package edu.olezha.sandbox
 
-import java.util
-
 object Collections {
 
   def main(args: Array[String]): Unit = {
@@ -9,7 +7,7 @@ object Collections {
     list = list:+ 4
     println(list)
 
-    val jlist = new util.ArrayList[String]()
+    val jlist = new java.util.ArrayList[String]()
     jlist.add("foo")
     jlist.add("bar")
     println(jlist)

@@ -12,22 +12,22 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Node {
 
-    public static final int HTL = 16;
+    public static final int HTL = 128;
 
     int location;
     List<Node> peers;
 
-    public void fetch(Request request) {
+    public int fetch(Request request) {
         request.getPath().add(this);
 
         if (request.getTargetLocation() == location) {
             System.out.println("success " + request);
-            return;
+            return request.getPath().size();
         }
 
         if (request.getPath().size() > HTL) {
             System.out.println("fail " + request);
-            return;
+            return -1;
         }
 
         Node next = null;
@@ -47,7 +47,9 @@ public class Node {
         }
 
         if (next != null) {
-            next.fetch(request);
+            return next.fetch(request);
         }
+
+        return -1;
     }
 }
