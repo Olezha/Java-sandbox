@@ -4,7 +4,8 @@ import java.util.*;
 
 public class App {
 
-    public static final int NETWORK_SIZE = 70_000;
+    private static final int NETWORK_SIZE = 70_000;
+    private static final int PEERS_PER_NODE = 24;
     private static final int REQUESTS_TO_CHECK_ROUTING = 1_000_000;
 
     public static void main(String[] args) {
@@ -14,34 +15,22 @@ public class App {
             nodes.add(new Node(i));
         }
 
-        // TODO: move to Node peers distribution logic
+        Random random = new Random();
+
         for (Node node : nodes) {
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 1)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 1)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 2)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 2)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 3)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 3)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 4)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 4)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 6)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 6)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 10)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 10)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 40)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 40)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 100)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 100)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 300)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 300)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 800)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 800)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + 5_000)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() - 5_000)));
-            node.getPeers().add(nodes.get(normalizeLocation(node.getLocation() + (int) (NETWORK_SIZE / 2.2))));
+            for (int i = 0; i < PEERS_PER_NODE; i++) {
+                Node randomNode = nodes.get(random.nextInt(nodes.size()));
+                if (randomNode.equals(node)) continue;
+                node.getPeers().add(randomNode);
+            }
         }
 
-        Random random = new Random();
+        System.out.println("workout");
+        for (int i = 0; i < PEERS_PER_NODE; i++)
+            for (Node node : nodes)
+                node.tick();
+
+        System.out.println("test routing");
         Node myNode = nodes.get(random.nextInt(nodes.size()));
         Map<Integer, Integer> hopsMap = new HashMap<>(Node.HTL);
         for (int i = 0; i < REQUESTS_TO_CHECK_ROUTING; i++) {
@@ -62,12 +51,5 @@ public class App {
 //                new ArrayList<>(hopsMap.keySet()),
 //                new ArrayList<>(hopsMap.values()));
 //        BitmapEncoder.saveBitmap(chart, "./target/hopsDistributionChart", BitmapEncoder.BitmapFormat.PNG);
-    }
-
-    private static int normalizeLocation(int location) {
-        location %= NETWORK_SIZE;
-        if (location < 0)
-            location += NETWORK_SIZE;
-        return location;
     }
 }
