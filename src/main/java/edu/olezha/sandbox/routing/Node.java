@@ -1,32 +1,33 @@
 package edu.olezha.sandbox.routing;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Node {
 
     public static final int HTL = 128;
 
     int location;
-    List<Node> peers;
+    final List<Node> peers = new ArrayList<>();
+
+    public Node(int location) {
+        this.location = location;
+    }
 
     public int fetch(Request request) {
         request.getPath().add(this);
 
         if (request.getTargetLocation() == location) {
-            System.out.println("success " + request);
             return request.getPath().size();
         }
 
         if (request.getPath().size() > HTL) {
-            System.out.println("fail " + request);
             return -1;
         }
 
