@@ -1,6 +1,5 @@
 package edu.olezha.sandbox.io.yaml;
 
-import lombok.Data;
 import org.junit.Test;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -8,32 +7,50 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.representer.Representer;
 import org.yaml.snakeyaml.resolver.Resolver;
 
+import java.io.StringWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-@Data
 public class ImplicitTypes {
 
     @Test
-    public void whenLoadYAML_thenLoadCorrectImplicitTypes() {
+    public void whenLoadYAML_thenLoadCorrectImplicitTypes() throws ParseException {
+        Map<Object, Object> document = new HashMap<>();
+        document.put(Double.valueOf("1"), Double.valueOf("1"));
+        document.put("1.0", "1.0");
+        document.put(2, 2);
+        document.put("2", "2");
+        document.put("3L", 3L);
+        document.put(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-11"), "myDate");
+        document.put("myMap", new HashMap<Object, Object>() {{
+            put("1", "1");
+            put("2", "2");
+        }});
+        Map<?, ?> map = null;
+        document.put(null, map);
+        System.out.println(document + System.lineSeparator());
+
         Yaml yaml = new Yaml(new Constructor(), new Representer(), new DumperOptions(), new Resolver() {
             @Override
             protected void addImplicitResolvers() {}
         });
-        Map<Object, Object> document = yaml.load(
-                "1.0: 1.000\n" +
-                        "2: 002\n" +
-                        ((long) Integer.MAX_VALUE + 1) + ": " + ((long) Integer.MAX_VALUE + 1) + "s\n" +
-                        "2018-07-22: 2018/07/22\n");
+
+        StringWriter writer = new StringWriter();
+        yaml.dump(document, writer);
+        String dump = writer.toString();
+        System.out.println(dump);
+
+        document = yaml.load(dump);
 
         assertNotNull(document);
-        assertEquals(4, document.size());
-
-        System.out.println(document);
 
         for (Map.Entry entry : document.entrySet()) {
-            System.out.println(entry.getKey().getClass() + " " + entry.getValue().getClass());
+            System.out.println(entry.getKey() + " " + (entry.getKey() == null ? null : entry.getKey().getClass()) + " : " +
+                    entry.getValue() + " " + (entry.getValue() == null ? null : entry.getValue().getClass()));
         }
     }
 }
