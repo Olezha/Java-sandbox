@@ -21,7 +21,7 @@ public class ImplicitTypes {
     public void whenLoadYAML_thenLoadCorrectImplicitTypes() throws ParseException {
         Map<Object, Object> document = new HashMap<>();
         document.put(Double.valueOf("1"), Double.valueOf("1"));
-        document.put("1.0", "1.0");
+        document.put("1.0", "1.");
         document.put(2, 2);
         document.put("2", "2");
         document.put("3L", 3L);
@@ -45,12 +45,19 @@ public class ImplicitTypes {
         System.out.println(dump);
 
         document = yaml.load(dump);
-
         assertNotNull(document);
+        print(document);
 
-        for (Map.Entry entry : document.entrySet()) {
+        document = yaml.load(".0: .1\n1.0: 1.");
+        assertNotNull(document);
+        print(document);
+    }
+
+    private void print(Map<?, ?> map) {
+        for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry.getKey() + " " + (entry.getKey() == null ? null : entry.getKey().getClass()) + " : " +
                     entry.getValue() + " " + (entry.getValue() == null ? null : entry.getValue().getClass()));
         }
+        System.out.println();
     }
 }
