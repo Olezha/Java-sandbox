@@ -6,22 +6,27 @@ import java.util.List;
 
 public class BTreePrinter {
 
+    public static void main(String[] args) {
+        BTreePrinterImpl.printNode(test1());
+        BTreePrinterImpl.printNode(test2());
+    }
+
     private static Node<Integer> test1() {
-        Node<Integer> root = new Node<Integer>(2);
-        Node<Integer> n11 = new Node<Integer>(7);
-        Node<Integer> n12 = new Node<Integer>(5);
-        Node<Integer> n21 = new Node<Integer>(2);
-        Node<Integer> n22 = new Node<Integer>(6);
-        Node<Integer> n23 = new Node<Integer>(3);
-        Node<Integer> n24 = new Node<Integer>(6);
-        Node<Integer> n31 = new Node<Integer>(5);
-        Node<Integer> n32 = new Node<Integer>(8);
-        Node<Integer> n33 = new Node<Integer>(4);
-        Node<Integer> n34 = new Node<Integer>(5);
-        Node<Integer> n35 = new Node<Integer>(8);
-        Node<Integer> n36 = new Node<Integer>(4);
-        Node<Integer> n37 = new Node<Integer>(5);
-        Node<Integer> n38 = new Node<Integer>(8);
+        Node<Integer> root = new Node<>(2);
+        Node<Integer> n11 = new Node<>(7);
+        Node<Integer> n12 = new Node<>(5);
+        Node<Integer> n21 = new Node<>(2);
+        Node<Integer> n22 = new Node<>(6);
+        Node<Integer> n23 = new Node<>(3);
+        Node<Integer> n24 = new Node<>(6);
+        Node<Integer> n31 = new Node<>(5);
+        Node<Integer> n32 = new Node<>(8);
+        Node<Integer> n33 = new Node<>(4);
+        Node<Integer> n34 = new Node<>(5);
+        Node<Integer> n35 = new Node<>(8);
+        Node<Integer> n36 = new Node<>(4);
+        Node<Integer> n37 = new Node<>(5);
+        Node<Integer> n38 = new Node<>(8);
 
         root.left = n11;
         root.right = n12;
@@ -44,15 +49,15 @@ public class BTreePrinter {
     }
 
     private static Node<Integer> test2() {
-        Node<Integer> root = new Node<Integer>(2);
-        Node<Integer> n11 = new Node<Integer>(7);
-        Node<Integer> n12 = new Node<Integer>(5);
-        Node<Integer> n21 = new Node<Integer>(2);
-        Node<Integer> n22 = new Node<Integer>(6);
-        Node<Integer> n23 = new Node<Integer>(9);
-        Node<Integer> n31 = new Node<Integer>(5);
-        Node<Integer> n32 = new Node<Integer>(8);
-        Node<Integer> n33 = new Node<Integer>(4);
+        Node<Integer> root = new Node<>(2);
+        Node<Integer> n11 = new Node<>(7);
+        Node<Integer> n12 = new Node<>(5);
+        Node<Integer> n21 = new Node<>(2);
+        Node<Integer> n22 = new Node<>(6);
+        Node<Integer> n23 = new Node<>(9);
+        Node<Integer> n31 = new Node<>(5);
+        Node<Integer> n32 = new Node<>(8);
+        Node<Integer> n33 = new Node<>(4);
 
         root.left = n11;
         root.right = n12;
@@ -67,13 +72,6 @@ public class BTreePrinter {
         n23.left = n33;
 
         return root;
-    }
-
-    public static void main(String[] args) {
-
-        BTreePrinterImpl.printNode(test1());
-        BTreePrinterImpl.printNode(test2());
-
     }
 }
 
@@ -105,7 +103,7 @@ class BTreePrinterImpl {
 
         BTreePrinterImpl.printWhitespaces(firstSpaces);
 
-        List<Node<T>> newNodes = new ArrayList<Node<T>>();
+        List<Node<T>> newNodes = new ArrayList<>();
         for (Node<T> node : nodes) {
             if (node != null) {
                 System.out.print(node.data);
@@ -119,24 +117,24 @@ class BTreePrinterImpl {
 
             BTreePrinterImpl.printWhitespaces(betweenSpaces);
         }
-        System.out.println("");
+        System.out.println();
 
         for (int i = 1; i <= endgeLines; i++) {
-            for (int j = 0; j < nodes.size(); j++) {
+            for (Node<T> node : nodes) {
                 BTreePrinterImpl.printWhitespaces(firstSpaces - i);
-                if (nodes.get(j) == null) {
+                if (node == null) {
                     BTreePrinterImpl.printWhitespaces(endgeLines + endgeLines + i + 1);
                     continue;
                 }
 
-                if (nodes.get(j).left != null)
+                if (node.left != null)
                     System.out.print("/");
                 else
                     BTreePrinterImpl.printWhitespaces(1);
 
                 BTreePrinterImpl.printWhitespaces(i + i - 1);
 
-                if (nodes.get(j).right != null)
+                if (node.right != null)
                     System.out.print("\\");
                 else
                     BTreePrinterImpl.printWhitespaces(1);
@@ -144,7 +142,7 @@ class BTreePrinterImpl {
                 BTreePrinterImpl.printWhitespaces(endgeLines + endgeLines - i);
             }
 
-            System.out.println("");
+            System.out.println();
         }
 
         printNodeInternal(newNodes, level + 1, maxLevel);
@@ -170,5 +168,4 @@ class BTreePrinterImpl {
 
         return true;
     }
-
 }
