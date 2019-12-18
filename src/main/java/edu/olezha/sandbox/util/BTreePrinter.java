@@ -6,27 +6,51 @@ import java.util.List;
 
 class BTreePrinterTest {
 
-    public static void main(String[] args) {
-        BTreePrinter.printNode(test1());
-        BTreePrinter.printNode(test2());
+    static class Node implements BTreePrinter.Node {
+        Node left, right;
+        String value;
+
+        public Node(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public BTreePrinter.Node getLeft() {
+            return left;
+        }
+
+        @Override
+        public BTreePrinter.Node getRight() {
+            return right;
+        }
+
+        @Override
+        public String getValue() {
+            return value;
+        }
     }
 
-    public static Node<Integer> test1() {
-        Node<Integer> root = new Node<>(2);
-        Node<Integer> n11 = new Node<>(7);
-        Node<Integer> n12 = new Node<>(5);
-        Node<Integer> n21 = new Node<>(2);
-        Node<Integer> n22 = new Node<>(6);
-        Node<Integer> n23 = new Node<>(3);
-        Node<Integer> n24 = new Node<>(6);
-        Node<Integer> n31 = new Node<>(5);
-        Node<Integer> n32 = new Node<>(8);
-        Node<Integer> n33 = new Node<>(4);
-        Node<Integer> n34 = new Node<>(5);
-        Node<Integer> n35 = new Node<>(8);
-        Node<Integer> n36 = new Node<>(4);
-        Node<Integer> n37 = new Node<>(5);
-        Node<Integer> n38 = new Node<>(8);
+    public static void main(String[] args) {
+        BTreePrinter.print(test1());
+        BTreePrinter.print(test2());
+    }
+
+    public static BTreePrinter.Node test1() {
+        Node root = new Node("2");
+        Node n11 = new Node("7");
+        Node n12 = new Node("5");
+        Node n21 = new Node("2");
+        Node n22 = new Node("6");
+        Node n23 = new Node("3");
+        Node n31 = new Node("5");
+        Node n24 = new Node("6");
+        Node n32 = new Node("8");
+        Node n33 = new Node("4");
+        Node n34 = new Node("5");
+        Node n35 = new Node("8");
+        Node n36 = new Node("4");
+        Node n37 = new Node("5");
+        Node n38 = new Node("8");
 
         root.left = n11;
         root.right = n12;
@@ -48,16 +72,16 @@ class BTreePrinterTest {
         return root;
     }
 
-    public static Node<Integer> test2() {
-        Node<Integer> root = new Node<>(2);
-        Node<Integer> n11 = new Node<>(7);
-        Node<Integer> n12 = new Node<>(5);
-        Node<Integer> n21 = new Node<>(2);
-        Node<Integer> n22 = new Node<>(6);
-        Node<Integer> n23 = new Node<>(9);
-        Node<Integer> n31 = new Node<>(5);
-        Node<Integer> n32 = new Node<>(8);
-        Node<Integer> n33 = new Node<>(4);
+    public static BTreePrinter.Node test2() {
+        Node root = new Node("2");
+        Node n11 = new Node("7");
+        Node n12 = new Node("5");
+        Node n21 = new Node("2");
+        Node n22 = new Node("6");
+        Node n23 = new Node("9");
+        Node n31 = new Node("5");
+        Node n32 = new Node("8");
+        Node n33 = new Node("4");
 
         root.left = n11;
         root.right = n12;
@@ -75,24 +99,19 @@ class BTreePrinterTest {
     }
 }
 
-class Node<T extends Comparable<?>> {
-    Node<T> left, right;
-    T data;
-
-    public Node(T data) {
-        this.data = data;
-    }
-}
-
 public class BTreePrinter {
 
-    public static <T extends Comparable<?>> void printNode(Node<T> root) {
-        int maxLevel = BTreePrinter.maxLevel(root);
-
-        printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+    public interface Node {
+        Node getLeft();
+        Node getRight();
+        String getValue();
     }
 
-    private static <T extends Comparable<?>> void printNodeInternal(List<Node<T>> nodes, int level, int maxLevel) {
+    public static void print(Node root) {
+        printNodeInternal(Collections.singletonList(root), 1, 5);
+    }
+
+    private static void printNodeInternal(List<Node> nodes, int level, int maxLevel) {
         if (nodes.isEmpty() || BTreePrinter.isAllElementsNull(nodes))
             return;
 
@@ -103,43 +122,47 @@ public class BTreePrinter {
 
         BTreePrinter.printWhitespaces(firstSpaces);
 
-        List<Node<T>> newNodes = new ArrayList<>();
-        for (Node<T> node : nodes) {
+        List<Node> newNodes = new ArrayList<>();
+        for (int i = 0; i < nodes.size(); i++) {
+            Node node = nodes.get(i);
+
             if (node != null) {
-                System.out.print(node.data);
-                newNodes.add(node.left);
-                newNodes.add(node.right);
+                System.out.print(node.getValue());
+                newNodes.add(node.getLeft());
+                newNodes.add(node.getRight());
             } else {
                 newNodes.add(null);
                 newNodes.add(null);
                 System.out.print(" ");
             }
 
-            BTreePrinter.printWhitespaces(betweenSpaces);
+            if (i != nodes.size() - 1) {
+                BTreePrinter.printWhitespaces(betweenSpaces);
+            }
         }
         System.out.println();
 
         for (int i = 1; i <= endgeLines; i++) {
-            for (Node<T> node : nodes) {
+            for (Node node : nodes) {
                 BTreePrinter.printWhitespaces(firstSpaces - i);
                 if (node == null) {
                     BTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
                     continue;
                 }
 
-                if (node.left != null)
+                if (node.getLeft() != null)
                     System.out.print("/");
                 else
                     BTreePrinter.printWhitespaces(1);
 
                 BTreePrinter.printWhitespaces(i + i - 1);
 
-                if (node.right != null)
+                if (node.getRight() != null)
                     System.out.print("\\");
                 else
                     BTreePrinter.printWhitespaces(1);
 
-                BTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
+                BTreePrinter.printWhitespaces(endgeLines * 2 - i);
             }
 
             System.out.println();
@@ -151,13 +174,6 @@ public class BTreePrinter {
     private static void printWhitespaces(int count) {
         for (int i = 0; i < count; i++)
             System.out.print(" ");
-    }
-
-    private static <T extends Comparable<?>> int maxLevel(Node<T> node) {
-        if (node == null)
-            return 0;
-
-        return Math.max(BTreePrinter.maxLevel(node.left), BTreePrinter.maxLevel(node.right)) + 1;
     }
 
     private static <T> boolean isAllElementsNull(List<T> list) {
