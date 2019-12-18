@@ -108,7 +108,7 @@ public class BTreePrinter {
     }
 
     public static void print(Node root) {
-        printNodeInternal(Collections.singletonList(root), 1, 5);
+        printNodeInternal(Collections.singletonList(root), 1, 7);
     }
 
     private static void printNodeInternal(List<Node> nodes, int level, int maxLevel) {

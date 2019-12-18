@@ -1,6 +1,6 @@
 package edu.olezha.sandbox.algo;
 
-import lombok.Data;
+import edu.olezha.sandbox.util.BTreePrinter;
 
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -10,7 +10,7 @@ public class HuffmanTree {
     public static void main(String[] args) {
         PriorityQueue<Node> pQueue = new PriorityQueue<>();
         Random random = new Random();
-        for (char letter = 'a'; letter <= 'z'; letter++) {
+        for (char letter = 'a'; letter <= 'g'; letter++) {
             pQueue.add(new Node(String.valueOf(letter), random.nextInt(10)));
         }
 
@@ -32,12 +32,11 @@ public class HuffmanTree {
             }
         }
 
-        System.out.println(root);
+        BTreePrinter.print(root);
     }
 }
 
-@Data
-class Node implements Comparable<Node> {
+class Node implements Comparable<Node>, BTreePrinter.Node {
     final String letter;
     final int frequency;
     Node leftNode;
@@ -51,5 +50,23 @@ class Node implements Comparable<Node> {
     @Override
     public int compareTo(Node node) {
         return frequency - node.frequency;
+    }
+
+    @Override
+    public BTreePrinter.Node getLeft() {
+        return leftNode;
+    }
+
+    @Override
+    public BTreePrinter.Node getRight() {
+        return rightNode;
+    }
+
+    @Override
+    public String getValue() {
+        if (leftNode == null && rightNode == null) {
+            return letter;
+        }
+        return String.valueOf(frequency);
     }
 }
