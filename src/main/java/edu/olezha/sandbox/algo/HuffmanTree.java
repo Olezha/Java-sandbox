@@ -10,7 +10,7 @@ public class HuffmanTree {
     public static void main(String[] args) {
         PriorityQueue<Node> pQueue = new PriorityQueue<>();
         Random random = new Random();
-        for (char letter = 'a'; letter <= 'g'; letter++) {
+        for (char letter = 'a'; letter <= 'z'; letter++) {
             pQueue.add(new Node(String.valueOf(letter), random.nextInt(10)));
         }
 
@@ -64,9 +64,6 @@ class Node implements Comparable<Node>, BTreePrinter.Node {
 
     @Override
     public String getValue() {
-        if (leftNode == null && rightNode == null) {
-            return letter;
-        }
-        return String.valueOf(frequency);
+        return frequency + (leftNode == null && rightNode == null ? " " + letter : "");
     }
 }
