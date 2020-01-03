@@ -4,12 +4,12 @@ public class Cpu {
 
     private static int reasonableProcesses;
 
-    public int getAvailableProcessors() {
+    public static int getReasonableProcesses() {
         if (reasonableProcesses > 0) {
             return reasonableProcesses;
         }
 
-        synchronized (this) {
+        synchronized (Cpu.class) {
             if (reasonableProcesses > 0) {
                 return reasonableProcesses;
             }
@@ -19,7 +19,7 @@ public class Cpu {
         }
     }
 
-    private int reasonableProcesses(int availableProcessors) {
+    private static int reasonableProcesses(int availableProcessors) {
         if (availableProcessors < 4) {
             return 1;
         }
@@ -32,6 +32,6 @@ public class Cpu {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Cpu().getAvailableProcessors());
+        System.out.println(Cpu.getReasonableProcesses());
     }
 }
