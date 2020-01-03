@@ -2,21 +2,33 @@ package edu.olezha.sandbox.multithreading;
 
 public class Cpu {
 
-    private static int availableProcessors;
+    private static int reasonableProcesses;
 
     public int getAvailableProcessors() {
-        if (availableProcessors > 0) {
-            return availableProcessors;
+        if (reasonableProcesses > 0) {
+            return reasonableProcesses;
         }
 
         synchronized (this) {
-            if (availableProcessors > 0) {
-                return availableProcessors;
+            if (reasonableProcesses > 0) {
+                return reasonableProcesses;
             }
 
-            availableProcessors = Runtime.getRuntime().availableProcessors();
-            return availableProcessors;
+            reasonableProcesses = reasonableProcesses(Runtime.getRuntime().availableProcessors());
+            return reasonableProcesses;
         }
+    }
+
+    private int reasonableProcesses(int availableProcessors) {
+        if (availableProcessors < 4) {
+            return 1;
+        }
+
+        if (availableProcessors < 16) {
+            return availableProcessors - 2;
+        }
+
+        return availableProcessors - 4;
     }
 
     public static void main(String[] args) {
