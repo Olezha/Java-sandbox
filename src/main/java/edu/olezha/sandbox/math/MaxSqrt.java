@@ -22,8 +22,8 @@ public class MaxSqrt {
             return 2;
         }
 
-        return Math.floor(Math.sqrt(b)) > Math.ceil(Math.sqrt(a)) ? 1 : 0;
-//        return Math.pow((int) Math.sqrt(b), 2) >= a ? 1 : 0;
+//        return Math.floor(Math.sqrt(b)) >= Math.ceil(Math.sqrt(a)) ? 1 : 0;
+        return Math.pow((int) Math.sqrt(b), 2) >= a ? 1 : 0;
     }
 
     private static boolean arrEntryInRangeCheck(int[] a, int min, int max) {
