@@ -82,16 +82,16 @@ public class MaxSqrt {
 //            System.out.println();
 //        }
 
-        System.out.println(repeatedSquareRoot(10, 20)); // 2
-        System.out.println(repeatedSquareRoot(6_000, 7_000)); // 3
-        System.out.println(repeatedSquareRoot(2, 1_000_000_000)); // 4
-        System.out.println(repeatedSquareRoot(999_000_000, 1_000_000_000)); // 1
-        System.out.println(repeatedSquareRoot(11, 12)); // 0
-        System.out.println(repeatedSquareRoot(2_000, 20_000)); // 3
+        System.out.println(repeatedSquareRoot(10, 20) == 2);
+        System.out.println(repeatedSquareRoot(6_000, 7_000) == 3);
+        System.out.println(repeatedSquareRoot(2, 1_000_000_000) == 4);
+        System.out.println(repeatedSquareRoot(999_000_000, 1_000_000_000) == 1);
+        System.out.println(repeatedSquareRoot(11, 12) == 0);
+        System.out.println(repeatedSquareRoot(2_000, 20_000) == 3);
 
         System.out.println(System.lineSeparator() + "glenngould's solution");
-        System.out.println(glenngouldSolution(10, 20));
-        System.out.println(glenngouldSolution(6_000, 7_000));
+        System.out.println(glenngouldSolution(10, 20) == 2);
+        System.out.println(glenngouldSolution(6_000, 7_000) == 3);
 
 //        System.out.println(System.lineSeparator() + "time");
 //        long start = System.currentTimeMillis();
