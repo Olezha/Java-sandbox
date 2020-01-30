@@ -13,43 +13,30 @@ public class MaxSqrt {
     };
 
     private static int repeatedSquareRoot(int a, int b) {
-        for (int i = 0; i < SQRT_MAGIC.length; i++) {
-            if (arrEntryInRangeCheck(SQRT_MAGIC[i], a, b)) {
+        for (int i = 0; i < SQRT_MAGIC.length; i++)
+            if (arrEntryInRangeCheck(SQRT_MAGIC[i], a, b))
                 return MAX_REPEATED_SQRT - i;
-            }
-        }
 
         return Math.pow((int) Math.sqrt(b), 2) >= a ? 1 : 0;
     }
 
     private static boolean arrEntryInRangeCheck(int[] a, int min, int max) {
-        if (a[a.length - 1] < min || a[0] > max) {
-            return false;
-        }
+        if (a[a.length - 1] < min || a[0] > max) return false;
 
         return arrEntryInRangeCheck(a, min, max, 0, a.length - 1);
     }
 
     private static boolean arrEntryInRangeCheck(int[] a, int min, int max, int left, int right) {
-        if (right < left) {
-            return false;
-        }
+        if (right < left) return false;
 
-        if (a[left] >= min && a[right] <= max) {
-            return true;
-        }
+        if (a[left] >= min && a[right] <= max) return true;
 
         int center = left + (right - left) / 2;
 
-        if (a[center] >= min && a[center] <= max) {
-            return true;
-        }
+        if (a[center] >= min && a[center] <= max) return true;
 
-        if (a[center] < min || a[center] < max) {
-            left = center + 1;
-        } else {
-            right = center - 1;
-        }
+        if (a[center] < min || a[center] < max) left = center + 1;
+        else right = center - 1;
 
         return arrEntryInRangeCheck(a, min, max, left, right);
     }
@@ -59,9 +46,7 @@ public class MaxSqrt {
         for (; ; ) {
             a = (int) Math.ceil(Math.sqrt(a));
             b = (int) Math.sqrt(b);
-            if (a > b) {
-                break;
-            }
+            if (a > b) break;
             nops++;
         }
         return nops;
