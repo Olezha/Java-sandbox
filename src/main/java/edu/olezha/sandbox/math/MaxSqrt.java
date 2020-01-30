@@ -56,12 +56,13 @@ public class MaxSqrt {
 
     private static int glenngouldSolution(int a, int b) {
         int nops = 0;
-        a = (int) Math.ceil(Math.sqrt(a));
-        b = (int) Math.sqrt(b);
-        while (b >= a) {
-            nops++;
+        for (; ; ) {
             a = (int) Math.ceil(Math.sqrt(a));
             b = (int) Math.sqrt(b);
+            if (a > b) {
+                break;
+            }
+            nops++;
         }
         return nops;
     }
