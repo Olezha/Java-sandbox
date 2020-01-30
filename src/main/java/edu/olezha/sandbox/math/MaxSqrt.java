@@ -22,11 +22,8 @@ public class MaxSqrt {
             return 2;
         }
 
-        if (Math.pow(Math.floor(Math.sqrt(b)), 2) >= a) {
-            return 1;
-        }
-
-        return 0;
+        return Math.floor(Math.sqrt(b)) > Math.ceil(Math.sqrt(a)) ? 1 : 0;
+//        return Math.pow((int) Math.sqrt(b), 2) >= a ? 1 : 0;
     }
 
     private static boolean arrEntryInRangeCheck(int[] a, int min, int max) {
@@ -96,34 +93,30 @@ public class MaxSqrt {
         System.out.println(repeatedSquareRoot(11, 12)); // 0
         System.out.println(repeatedSquareRoot(2_000, 20_000)); // 3
 
-        System.out.println(System.lineSeparator() + "glenngould solution");
+        System.out.println(System.lineSeparator() + "glenngould's solution");
         System.out.println(glenngouldSolution(10, 20));
         System.out.println(glenngouldSolution(6_000, 7_000));
-        System.out.println(glenngouldSolution(2, 1_000_000_000));
-        System.out.println(glenngouldSolution(999_000_000, 1_000_000_000));
-        System.out.println(glenngouldSolution(11, 12));
-        System.out.println(glenngouldSolution(2_000, 20_000));
 
-        System.out.println(System.lineSeparator() + "time");
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000_000; i++) {
-            repeatedSquareRoot(10, 20);
-            repeatedSquareRoot(6_000, 7_000);
-            repeatedSquareRoot(2, 1_000_000_000);
-            repeatedSquareRoot(999_000_000, 1_000_000_000);
-            repeatedSquareRoot(11, 12);
-            repeatedSquareRoot(2_000, 20_000);
-        }
-        System.out.println("my " + (System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 10_000_000; i++) {
-            glenngouldSolution(10, 20);
-            glenngouldSolution(6_000, 7_000);
-            glenngouldSolution(2, 1_000_000_000);
-            glenngouldSolution(999_000_000, 1_000_000_000);
-            glenngouldSolution(11, 12);
-            glenngouldSolution(2_000, 20_000);
-        }
-        System.out.println("glenngould's " + (System.currentTimeMillis() - start));
+//        System.out.println(System.lineSeparator() + "time");
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 10_000_000; i++) {
+//            repeatedSquareRoot(10, 20);
+//            repeatedSquareRoot(6_000, 7_000);
+//            repeatedSquareRoot(2, 1_000_000_000);
+//            repeatedSquareRoot(999_000_000, 1_000_000_000);
+//            repeatedSquareRoot(11, 12);
+//            repeatedSquareRoot(2_000, 20_000);
+//        }
+//        System.out.println("my " + (System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        for (int i = 0; i < 10_000_000; i++) {
+//            glenngouldSolution(10, 20);
+//            glenngouldSolution(6_000, 7_000);
+//            glenngouldSolution(2, 1_000_000_000);
+//            glenngouldSolution(999_000_000, 1_000_000_000);
+//            glenngouldSolution(11, 12);
+//            glenngouldSolution(2_000, 20_000);
+//        }
+//        System.out.println("glenngould's " + (System.currentTimeMillis() - start));
     }
 }
