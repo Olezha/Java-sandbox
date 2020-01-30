@@ -22,7 +22,7 @@ public class MaxSqrt {
             return 2;
         }
 
-        if (Math.pow((int) Math.sqrt(b), 2) >= a) {
+        if (Math.pow(Math.floor(Math.sqrt(b)), 2) >= a) {
             return 1;
         }
 
