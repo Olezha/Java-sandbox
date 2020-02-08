@@ -6,12 +6,16 @@ public class RecursiveStaircase {
         if (N < 0) throw new IllegalArgumentException();
         if (N < 2) return 1;
 
-        int[] numWays = new int[N + 1];
-        numWays[0] = numWays[1] = 1;
-        for (int i = 2; i < numWays.length; i++)
-            numWays[i] = numWays[i - 1] + numWays[i - 2];
+        int last = 1;
+        int oneBeforeLast = 1;
 
-        return numWays[N];
+        for (int i = 2; i <= N; i++) {
+            int next = last + oneBeforeLast;
+            oneBeforeLast = last;
+            last = next;
+        }
+
+        return last;
     }
 
     public static void main(String[] args) {
