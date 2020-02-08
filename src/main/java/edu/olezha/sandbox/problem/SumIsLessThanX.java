@@ -11,16 +11,16 @@ public class SumIsLessThanX {
         System.out.println(pairsSum(new int[] {2, 4, 6, 8, 9}, 14)); // 7
     }
 
-    // O(N^2 / 2)
+    // O(N)
     static int pairsSum(int[] a, int maxSum) {
         int sum = 0;
-        int right = a.length;
-        for (int i = 0; i < right; i++)
-            for (int j = i + 1; j < right; j++)
-                if (a[i] + a[j] < maxSum)
-                    sum++;
-                else
-                    right = j;
+        int left = 0;
+        int right = a.length - 1;
+        while (right > left)
+            if (a[left] + a[right] < maxSum) {
+                sum += right - left;
+                left++;
+            } else right--;
         return sum;
     }
 }
