@@ -7,16 +7,20 @@ package edu.olezha.sandbox.problem;
 public class SumIsLessThanX {
 
     public static void main(String[] args) {
-        System.out.println(pairsSum(new int[] {1, 3, 5, 12, 14, 15, 16, 55, 56}, 55));
+        System.out.println(pairsSum(new int[] {1, 3, 5, 12, 14, 15, 16, 55, 56}, 55)); // 21
+        System.out.println(pairsSum(new int[] {2, 4, 6, 8, 9}, 14)); // 7
     }
 
     // O(N^2 / 2)
     static int pairsSum(int[] a, int maxSum) {
         int sum = 0;
-        for (int i = 0; i < a.length; i++)
-            for (int j = i + 1; j < a.length; j++)
+        int right = a.length;
+        for (int i = 0; i < right; i++)
+            for (int j = i + 1; j < right; j++)
                 if (a[i] + a[j] < maxSum)
                     sum++;
+                else
+                    right = j;
         return sum;
     }
 }
