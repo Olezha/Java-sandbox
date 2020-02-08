@@ -1,6 +1,7 @@
 package edu.olezha.sandbox.problem;
 
-import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -11,21 +12,17 @@ public class Max20elements {
 
     public static void main(String[] args) {
 //        int[] in = new int[1_000_000]; // 4 b * 10^6 ~= 3,8 mb
-        int[] out = new int[20];
+        Queue<Integer> pq = new PriorityQueue<>();
         Random random = new Random();
         for (int i = 0; i < 1_000_000_000; i++) {
-            max20elements(random.nextInt(1_000_000), out);
+            max20elements(random.nextInt(1_000_000), pq);
         }
-        System.out.println(Arrays.toString(out));
+        System.out.println(pq.toString());
     }
 
-    // O(n^2)
-    static void max20elements(int in, int[] out) {
-        for (int i = 0; i < out.length; i++) {
-            if (out[i] < in) {
-                out[i] = in;
-                return;
-            }
-        }
+    // O(NlogM)
+    static void max20elements(int in, Queue<Integer> pq) {
+        pq.add(in);
+        if (pq.size() > 20) pq.poll();
     }
 }
