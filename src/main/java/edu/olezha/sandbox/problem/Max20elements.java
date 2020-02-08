@@ -1,5 +1,6 @@
 package edu.olezha.sandbox.problem;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
@@ -12,10 +13,10 @@ public class Max20elements {
 
     public static void main(String[] args) {
 //        int[] in = new int[1_000_000]; // 4 b * 10^6 ~= 3,8 mb
-        Queue<Integer> pq = new PriorityQueue<>();
+        Queue<Integer> pq = new PriorityQueue<>((i1, i2) -> i2 - i1);
         Random random = new Random();
-        for (int i = 0; i < 1_000_000_000; i++) {
-            max20elements(random.nextInt(1_000_000), pq);
+        for (int i = 0; i < 1_000; i++) {
+            max20elements(random.nextInt(1_000), pq);
         }
         System.out.println(pq.toString());
     }
