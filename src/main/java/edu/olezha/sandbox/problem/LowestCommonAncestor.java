@@ -61,13 +61,3 @@ public class LowestCommonAncestor {
         System.out.println("LCA(2, 4) 2: " + tree.findLCA(2,4));
     }
 }
-
-class Node {
-
-    int value;
-    Node left, right;
-
-    Node(int value) {
-        this.value = value;
-    }
-}
