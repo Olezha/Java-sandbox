@@ -1,5 +1,7 @@
 package edu.olezha.sandbox.problem;
 
+import java.util.Arrays;
+
 public class HighestProductOfTriplet {
 
     public static void main(String[] args) {
@@ -8,39 +10,12 @@ public class HighestProductOfTriplet {
         System.out.println("168 " + highestProductOfTriplet(new int[] {1, -4, 3, -6, 7, 0}));
     }
 
-    // O(n)
+    // O(NLgN)
     static int highestProductOfTriplet(int[] a) {
-        int h1 = Integer.MIN_VALUE, h2 = Integer.MIN_VALUE, h3 = Integer.MIN_VALUE,
-                l1 = Integer.MAX_VALUE, l2 = Integer.MAX_VALUE;
-        for (int e : a) {
-            if (e > h3) {
-                if (e > h2) {
-                    if (e > h1) {
-                        h3 = h2;
-                        h2 = h1;
-                        h1 = e;
-                    } else {
-                        h3 = h2;
-                        h2 = e;
-                    }
-                } else {
-                    h3 = e;
-                }
-            }
-
-            if (e < l2) {
-                if (e < l1) {
-                    l2 = l1;
-                    l1 = e;
-                } else {
-                    l2 = e;
-                }
-            }
-        }
-
-        int max1 = h1 * h2 * h3;
-        int max2 = l1 * l2 * h1;
-
-        return Math.max(max1, max2);
+        Arrays.sort(a);
+        return Math.max(
+                a[a.length - 3] * a[a.length - 2] * a[a.length - 1],
+                a[0] * a[1] * a[a.length - 1]
+        );
     }
 }
