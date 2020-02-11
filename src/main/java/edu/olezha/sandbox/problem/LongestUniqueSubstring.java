@@ -33,8 +33,8 @@ public class LongestUniqueSubstring {
             if (visited[str.charAt(i)] >= substringStart) {
                 if (substringLength > longestSubstring.length())
                     longestSubstring = str.substring(substringStart, substringStart + substringLength);
-                substringStart = i;
-                substringLength = 1;
+                substringLength -= visited[str.charAt(i)] - substringStart;
+                substringStart = visited[str.charAt(i)] + 1;
             } else {
                 substringLength++;
             }
@@ -48,8 +48,9 @@ public class LongestUniqueSubstring {
     }
 
     public static void main(String[] args) {
-        System.out.println(longestUniqueSubstring("bbbcde"));
-        System.out.println(longestUniqueSubstring("bbbcdbe"));
-        System.out.println(longestUniqueSubstring("ABDEFGABEF"));
+        System.out.println(longestUniqueSubstring("abcade")); // bcade
+        System.out.println(longestUniqueSubstring("bbbcde")); // bcde
+        System.out.println(longestUniqueSubstring("bbbcdbe")); // bcd
+        System.out.println(longestUniqueSubstring("ABDEFGABEF")); // ABDEFG
     }
 }
