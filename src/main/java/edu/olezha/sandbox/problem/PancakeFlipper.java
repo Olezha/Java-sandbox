@@ -1,14 +1,33 @@
 package edu.olezha.sandbox.problem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * https://code.google.com/codejam/contest/3264486/dashboard
  */
 public class PancakeFlipper {
 
-    public static void main(String[] args) {
-        System.out.println(view(1, solve(parsePancakes("---+-++-"), 3)));
-        System.out.println(view(2, solve(parsePancakes("+++++"), 4)));
-        System.out.println(view(3, solve(parsePancakes("-+-+-"), 4)));
+    public static void main(String[] args) throws IOException {
+        test("A-small-practice.in");
+        test("A-large-practice.in");
+    }
+
+    static void test(String file) throws IOException {
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(
+                             new FileReader(
+                                     PancakeFlipper.class.getClassLoader().getResource(
+                                             file).getFile()))) {
+            bufferedReader.readLine();
+            String line;
+            int i = 1;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] in = line.split(" ");
+                System.out.println(view(i++, solve(parsePancakes(in[0]), Integer.parseInt(in[1]))));
+            }
+        }
     }
 
     static int solve(boolean[] pancakes, int flipperSize) {
