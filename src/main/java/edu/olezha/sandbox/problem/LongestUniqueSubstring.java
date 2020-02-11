@@ -20,9 +20,11 @@ public class LongestUniqueSubstring {
      */
     static String longestUniqueSubstring(String str) {
         if (str.length() == 0) return str;
-        String longestSubstring = String.valueOf(str.charAt(0));
 
-        int substringStart = 0;
+        int longestSubstringFrom = 0;
+        int longestSubstringLength = 1;
+
+        int substringFrom = 0;
         int substringLength = 1;
 
         int[] visited = new int[NO_OF_CHARS];
@@ -30,27 +32,31 @@ public class LongestUniqueSubstring {
         visited[str.charAt(0)] = 0;
 
         for (int i = 1; i < str.length(); i++) {
-            if (visited[str.charAt(i)] >= substringStart) {
-                if (substringLength > longestSubstring.length())
-                    longestSubstring = str.substring(substringStart, substringStart + substringLength);
-                substringLength -= visited[str.charAt(i)] - substringStart;
-                substringStart = visited[str.charAt(i)] + 1;
+            if (visited[str.charAt(i)] >= substringFrom) {
+                if (substringLength > longestSubstringLength) {
+                    longestSubstringFrom = substringFrom;
+                    longestSubstringLength = substringLength;
+                }
+                substringLength -= visited[str.charAt(i)] - substringFrom;
+                substringFrom = visited[str.charAt(i)] + 1;
             } else {
                 substringLength++;
             }
             visited[str.charAt(i)] = i;
         }
 
-        if (substringLength > longestSubstring.length())
-            longestSubstring = str.substring(substringStart, substringStart + substringLength);
+        if (substringLength > longestSubstringLength) {
+            longestSubstringFrom = substringFrom;
+            longestSubstringLength = substringLength;
+        }
 
-        return longestSubstring;
+        return str.substring(longestSubstringFrom, longestSubstringFrom + longestSubstringLength);
     }
 
     public static void main(String[] args) {
         System.out.println(longestUniqueSubstring("abcade")); // bcade
         System.out.println(longestUniqueSubstring("bbbcde")); // bcde
-        System.out.println(longestUniqueSubstring("bbbcdbe")); // bcd
+        System.out.println(longestUniqueSubstring("bbbcdbe")); // cbcd
         System.out.println(longestUniqueSubstring("ABDEFGABEF")); // ABDEFG
     }
 }
