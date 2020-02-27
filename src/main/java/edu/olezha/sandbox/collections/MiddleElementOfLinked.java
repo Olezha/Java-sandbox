@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Finding Middle element of linked list in one pass
+ * Finding Middle element of linked list in ~~one~~ 1.5 pass
+ * and you don’t know the length of LinkedList
  */
 public class MiddleElementOfLinked {
 
@@ -18,16 +19,21 @@ public class MiddleElementOfLinked {
         list.add(5);
 
         System.out.println(middle(list));
+        System.out.println(list.get((list.size() - 1)/2));
     }
 
     private static <E> E middle(List<E> list) {
-        if (list.size() == 0)
-            return null;
+        E mid = null;
 
-        int middle = (list.size() - 1) / 2;
-        Iterator<E> iterator = list.iterator();
-        for (int i = 0; i < middle; i++)
-            iterator.next();
-        return iterator.next();
+        Iterator<E> slowIterator = list.iterator();
+        Iterator<E> fastIterator = list.iterator();
+        while (fastIterator.hasNext()) {
+            mid = slowIterator.next();
+
+            fastIterator.next();
+            if (fastIterator.hasNext()) fastIterator.next();
+        }
+
+        return mid;
     }
 }
