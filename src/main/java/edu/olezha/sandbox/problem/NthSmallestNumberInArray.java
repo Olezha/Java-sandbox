@@ -8,26 +8,30 @@ import java.util.Arrays;
 public class NthSmallestNumberInArray {
 
     public static void main(String[] args) {
-        int n = 4;
         int[] arr = {13, 7, 6, 45, 21, 9, 2, 100};
 
+        System.out.printf("n-th element: %d" + System.lineSeparator(), nthMin(arr, 4)); // 9
+        System.out.printf("n-th element: %d" + System.lineSeparator(), nthMin(arr, 1)); // 2
+    }
+
+    private static int nthMin(int[] arr, int n) {
         int[] nArr = Arrays.copyOf(arr, n);
         Arrays.sort(nArr);
+
         for (int i = n; i < arr.length; i++) {
             if (arr[i] < nArr[n - 1]) {
-                nArr[n - 1] = arr[i];
-                for (int j = n - 1; j > 0; j--) {
-                    if (nArr[j] < nArr[j - 1]) {
-                        int tmp = nArr[j];
+                int j = n - 1;
+                for (; j > 0; j--) {
+                    if (nArr[j - 1] > arr[i]) {
                         nArr[j] = nArr[j - 1];
-                        nArr[j - 1] = tmp;
                     } else {
                         break;
                     }
                 }
+                nArr[j] = arr[i];
             }
         }
 
-        System.out.printf("n-th element: %d", nArr[n - 1]);
+        return nArr[n - 1];
     }
 }
