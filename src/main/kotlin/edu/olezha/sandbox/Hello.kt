@@ -47,6 +47,17 @@ fun main() {
     }
 
     `))`()
+
+    var numLetters = "Mississippi".count()
+    println(numLetters)
+    numLetters = "Mississippi".count({ letter ->
+        letter == 's'
+    })
+    println(numLetters)
+
+    println({
+        "hi"
+    }())
 }
 
 private fun `))`() {
