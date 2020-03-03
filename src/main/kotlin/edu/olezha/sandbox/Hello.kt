@@ -1,5 +1,6 @@
 package edu.olezha.sandbox
 
+import java.lang.Error
 import kotlin.random.Random
 
 const val SOME_MAX = 5_000
@@ -35,6 +36,29 @@ fun main() {
     println(msg)
 
     f()
+
+    a(1, "a")
+    a(b = "b", a = 2)
+
+    try {
+        aTodo()
+    } catch (e: Error) {
+        println(e)
+    }
+
+    `))`()
+}
+
+private fun `))`() {
+    println("))")
+}
+
+private fun aTodo(): String {
+    TODO("implement the ... to [...][return ...]")
+}
+
+private fun a(a: Int, b: String) {
+    println("$a $b")
 }
 
 private fun s(z: Int) =
