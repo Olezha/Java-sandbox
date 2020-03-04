@@ -48,16 +48,64 @@ fun main() {
 
     `))`()
 
-    var numLetters = "Mississippi".count()
-    println(numLetters)
-    numLetters = "Mississippi".count({ letter ->
-        letter == 's'
-    })
-    println(numLetters)
+    val s: String = "Mississippi"
+    var numLetters = s.count()
+    println("$s " + numLetters)
+    numLetters = s.count { it == 's' }
+    println("$s " + numLetters)
 
     println({
         "hi"
     }())
+
+    var counter = 0
+    val hi = {
+        counter++
+        "Hi $counter"
+    }
+    println(hi())
+    println(hi())
+    println(hi())
+
+    val hii: (Int, String) -> String = { term, n ->
+        counter += term
+        "Hii$n $counter"
+    }
+    println(hii(2, "2"))
+    println(hii(3, "3"))
+
+    val hiii: (Int) -> String = {
+        counter += it
+        "Hiii$it $counter"
+    }
+    println(hiii(2))
+    println(hiii(3))
+
+    val hiiiii = { term: Int, n: String ->
+        counter += term
+        "Hii$n $counter"
+    }
+    println(hiiiii(4, "4"))
+    println(hiiiii(5, "5"))
+
+    val funFun = { name: String, num: Int ->
+        "Welcome $name ($num)"
+    }
+    funFunction("Oleh", funFun)
+    funFunction("Guyal") { name, num ->
+        "Hi $name ($num)"
+    }
+
+    funFunction("Guyal", ::sis)
+}
+
+private inline fun funFunction(name: String, greetingFunction: (String, Int) -> String) {
+    val num = (1..3).shuffled().last() // rand 1, 2 or 3
+    println(greetingFunction(name, num))
+}
+
+private fun sis(name: String, v: Int): String {
+    return "sis: $name $v"
 }
 
 private fun `))`() {
