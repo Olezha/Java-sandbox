@@ -1,6 +1,7 @@
 package edu.olezha.sandbox
 
 import java.lang.Error
+import java.lang.Exception
 import kotlin.random.Random
 
 const val SOME_MAX = 5_000
@@ -48,11 +49,11 @@ fun main() {
 
     `))`()
 
-    val s: String = "Mississippi"
+    val s = "Mississippi"
     var numLetters = s.count()
-    println("$s " + numLetters)
+    println("$s $numLetters")
     numLetters = s.count { it == 's' }
-    println("$s " + numLetters)
+    println("$s $numLetters")
 
     println({
         "hi"
@@ -97,6 +98,47 @@ fun main() {
     }
 
     funFunction("Guyal", ::sis)
+
+    val fn = configureFunction()
+    println(fn("Oleh"))
+
+    var nullable: String? = "nullable"
+    nullable = null
+    println(nullable)
+
+    print("readline ")
+    var line = readLine()?.capitalize()
+    println(line)
+    line = line?.let {
+        if (it.isNotBlank())
+            it.decapitalize()
+        else
+            "Blank"
+    }
+    println(line)
+    line = readLine()!!.capitalize()
+    println(line)
+    line = readLine() ?: throw SomeException()
+    line = line.capitalize()
+    println(line)
+
+    if (Random.nextBoolean())
+        line = null
+    checkNotNull(line, {"message"})
+//    require(line.length > 10)
+    // requireNotNull error assert
+
+//    throw Exception()
+}
+
+class SomeException() :
+        IllegalStateException()
+
+private fun configureFunction(): (String) -> String {
+    return { name: String ->
+        println("l $name")
+        name
+    }
 }
 
 private inline fun funFunction(name: String, greetingFunction: (String, Int) -> String) {
