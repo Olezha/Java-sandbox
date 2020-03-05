@@ -1,15 +1,18 @@
 package edu.olezha.sandbox
 
+import java.io.File
+import java.io.FileNotFoundException
 import java.lang.Error
 import java.lang.Exception
 import kotlin.random.Random
 
 const val SOME_MAX = 5_000
+const val NAME = "Oleh Sh"
 
 fun main() {
     println("Hello, world!")
 
-    val x = 5
+    var x = 5
     var y: Long = 2
     y *= x
 
@@ -27,7 +30,7 @@ fun main() {
     val b = if (Random.nextBoolean()) "T"  else "F"
     println(b)
 
-    val z = Random.nextInt(0, 100)
+    var z = Random.nextInt(0, 100)
     if (z in 25..75)
         println("$z in 25..75")
     else
@@ -100,14 +103,16 @@ fun main() {
     funFunction("Guyal", ::sis)
 
     val fn = configureFunction()
-    println(fn("Oleh"))
+    println(fn(NAME.substring(NAME.indexOf(" ") until NAME.length)))
+    println(fn(NAME.substring(0 until NAME.indexOf(" "))))
 
     var nullable: String? = "nullable"
     nullable = null
     println(nullable)
 
-    print("readline ")
-    var line = readLine()?.capitalize()
+//    print("readline ")
+//    var line = readLine()?.capitalize()
+    var line: String? = "ABC"
     println(line)
     line = line?.let {
         if (it.isNotBlank())
@@ -116,19 +121,101 @@ fun main() {
             "Blank"
     }
     println(line)
-    line = readLine()!!.capitalize()
+//    line = readLine()!!.capitalize()
     println(line)
-    line = readLine() ?: throw SomeException()
-    line = line.capitalize()
+//    line = readLine() ?: throw SomeException()
+    line = line?.capitalize()
     println(line)
 
     if (Random.nextBoolean())
         line = null
-    checkNotNull(line, {"message"})
+    try {
+        checkNotNull(line, { "message" })
+    } catch (e: IllegalStateException) {
+        println(e)
+    }
 //    require(line.length > 10)
     // requireNotNull error assert
 
 //    throw Exception()
+
+    println(NAME.split(" "))
+
+    val typeNamePrice = "shandy,Dragon's Breath,5.91"
+    val (type, name, price) = typeNamePrice.split(",")
+    println("$name - $type - $price")
+
+    println(toDragonSpeak(NAME))
+    println(toDragonSpeak("Olezha"))
+
+    val ca = "qwerty".toCharArray();
+    val s1 = String(ca)
+    val s2 = String(ca)
+    println("$s1 == $s2: " + (s1 == s2))
+    println("$s1 === $s2: " + (s1 === s2))
+
+    val om = '\u0950'
+    println(om)
+    NAME.forEach { when (it) {
+        ' ' -> {}
+        else -> println("$it")
+    }}
+
+    val gold = "5.91".toIntOrNull() ?: 0
+    println(gold)
+
+    var menuFile = File("menu-file.txt").apply {
+        setReadable(true)
+        setWritable(true)
+        setExecutable(false)
+    }
+
+    val firstItemSquared = listOf(3,2,1).first().let {
+        it * it
+    }
+    println(firstItemSquared)
+
+    try {
+        menuFile = File("menu-file.txt")
+        val servesDragonsBreath = menuFile.run {
+            readText().contains("Dragon's Breath")
+        }
+    } catch (e: FileNotFoundException) {
+        println(e)
+    }
+
+    fun nameIsLong(name: String) = name.length >= 20
+    "Madrigal"
+            .run(::nameIsLong)
+            .run(::println)
+    "Polarcubis, Supreme Master of NyetHack"
+            .run(::nameIsLong)
+            .run(::println)
+
+    val healthPoints = 1
+    val status = run {
+        if (healthPoints == 100) "perfect health" else "has injuries"
+    }
+    println(status)
+
+    val nameTooLong = with("Polarcubis, Supreme Master of NyetHack") {
+        length >= 20
+    }
+    println(nameTooLong)
+
+    "abc"
+            .also { println(it) }
+            .also { println(it) }
+
+    var fileContents = File("myfile.txt")
+            .takeIf { it.canRead() && it.canWrite() }
+            ?.readText()
+    println(fileContents)
+
+    fileContents = File("myfile.txt")
+            .takeUnless { !it.canRead() }
+            ?.readText()
+    println(fileContents)
 }
 
 class SomeException() :
@@ -174,3 +261,15 @@ private fun f(top: Int = 3) {
     println(0 in top downTo 1)
     println(1 in 1 until top)
 }
+
+private fun toDragonSpeak(phrase: String) =
+        phrase.replace(Regex("[aeiou]")) {
+            when (it.value) {
+                "a" -> "4"
+                "e" -> "3"
+                "i" -> "1"
+                "o" -> "0"
+                "u" -> "|_|"
+                else -> it.value
+            }
+        }
