@@ -244,11 +244,20 @@ fun main() {
     println(map["c"])
     println(map.getOrDefault("d", "-"))
 
-    val person = Person()
+    val person = Person("oleh", "Sh")
     println(person.name)
     person.name = " Olezha"
-    println(person.name)
-    println(person.rolledValue)
+    println(person.name + " " + person.surname + " " + person.howOldAreYou())
+    println(person.name + " " + person.surname + " " + person.howOldAreYou())
+
+    println(person.isMaried())
+    try {
+        println(person.significantOther)
+    } catch (e: UninitializedPropertyAccessException) {
+        println(e)
+    }
+
+    println(person.weight)
 }
 
 class SomeException() :
