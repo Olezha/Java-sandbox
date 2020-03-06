@@ -216,6 +216,39 @@ fun main() {
             .takeUnless { !it.canRead() }
             ?.readText()
     println(fileContents)
+
+    var list: List<String> = listOf("one", "two", "three")
+    println(list)
+    println(list[2])
+    println(list.getOrElse(3) {"unknown"})
+    println(list.getOrNull(4) ?: "unknown")
+    list = list.toMutableList()
+    list.add("four")
+    println(list)
+    list.forEachIndexed { i, v ->
+        println("$i $v")
+    }
+
+    list = File("data/data.txt")
+            .readText()
+            .split("\n")
+    println(list)
+    println(list.shuffled())
+
+    (list as MutableList)[0] = "0"
+    println(list)
+
+    val map = mutableMapOf("a" to "A", "b" to "B", "c" to "C")
+    map += "c" to "C"
+    println(map)
+    println(map["c"])
+    println(map.getOrDefault("d", "-"))
+
+    val person = Person()
+    println(person.name)
+    person.name = " Olezha"
+    println(person.name)
+    println(person.rolledValue)
 }
 
 class SomeException() :
