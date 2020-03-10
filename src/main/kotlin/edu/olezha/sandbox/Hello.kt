@@ -258,6 +258,38 @@ fun main() {
     }
 
     println(person.weight)
+
+    println(SomeSingleton.test())
+    println(SomeSingleton.test())
+
+    val any: Any = SomeSingleton
+    if (any is SomeSingleton) // class cast
+        println(any.test())
+
+    val superPerson = object : Person("Super man") {
+        fun power() = "super power"
+    }
+    println("${superPerson.name} has ${superPerson.power()}")
+
+    var currentPosition = Coordinate(1, 0)
+    currentPosition += Coordinate(3, 4)
+    println(currentPosition)
+}
+
+object SomeSingleton {
+
+    var counter = 0;
+
+    fun test(): String {
+        counter++
+        return "test $counter"
+    }
+}
+
+data class Coordinate(val x: Int, val y: Int) {
+    val isInBounds = x >= 0 && y >= 0
+
+    operator fun plus(other: Coordinate) = Coordinate(x + other.x, y + other.y)
 }
 
 class SomeException() :

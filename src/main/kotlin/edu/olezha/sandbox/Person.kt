@@ -1,6 +1,6 @@
 package edu.olezha.sandbox
 
-class Person(_name: String, val surname: String,
+open class Person(_name: String, val surname: String,
              private var age: Int = 0) {
     var name = _name
         get() = field.capitalize()
