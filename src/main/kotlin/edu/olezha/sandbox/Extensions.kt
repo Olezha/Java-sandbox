@@ -2,9 +2,12 @@ package edu.olezha.sandbox
 
 fun String.addEnthusiasm(amount: Int = 1) = this + "!".repeat(amount)
 
-fun Any.out() = println(this)
+fun <T> T.out(): T {
+    println(this)
+    return this
+}
 
 fun main() {
-    "Hi".addEnthusiasm(5).out()
-    36.out()
+    "Hi".out().addEnthusiasm(5).out()
+    36.out().out()
 }
