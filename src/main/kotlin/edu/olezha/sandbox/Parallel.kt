@@ -3,10 +3,13 @@ package edu.olezha.sandbox
 import kotlinx.coroutines.*
 
 fun main() {
-    GlobalScope.launch {
-        fetchAsync(3).await().out()
-        fetchAsync(1).await().out()
-        fetchAsync(3).await().out()
+    val j = GlobalScope.launch {
+        val a1 = fetchAsync(3)
+        val a2 = fetchAsync(4)
+        val a3 = fetchAsync(7)
+        a1.await().out()
+        a2.await().out()
+        a3.await().out()
     }
 
     GlobalScope.launch {
