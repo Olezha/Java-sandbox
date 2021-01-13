@@ -2,6 +2,7 @@ package edu.olezha.sandbox.core.date.utilDate;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -21,7 +22,7 @@ public class Main {
         log.info("UTC Zero time: {}" + System.lineSeparator(), date0);
 
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Kiev"));
-        Date myBirthday = new Date(83, 8, 20);
+        Date myBirthday = new Date(83, Calendar.AUGUST, 20);
         log.info("I was born in {}", myBirthday);
         TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
         log.info("I was born in {}", myBirthday);
