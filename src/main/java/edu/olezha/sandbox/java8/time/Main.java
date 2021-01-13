@@ -1,5 +1,7 @@
 package edu.olezha.sandbox.java8.time;
 
+import edu.olezha.sandbox.string.Str;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +12,8 @@ public class Main {
         /*
          * @See https://docs.oracle.com/javase/tutorial/datetime/iso/overview.html
          */
+
+        parsingRFC1123DateTime();
 
         LocalDateTime localDateTime = LocalDateTime.of(2018, 3, 6, 23, 36);
         System.out.println(localDateTime);
@@ -30,6 +34,12 @@ public class Main {
                 System.out.println(getDayOfTheProgrammerDate(year));
             }
         }
+    }
+
+    private static void parsingRFC1123DateTime() {
+        String dateTimeString = "Fri, 18 Dec 2020 13:05:04 GMT";
+        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.RFC_1123_DATE_TIME);
+        System.out.println(dateTime);
     }
 
     private static String getDayOfTheProgrammerDate(int year) {
