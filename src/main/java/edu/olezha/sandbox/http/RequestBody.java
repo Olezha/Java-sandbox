@@ -12,7 +12,7 @@ public class RequestBody extends okhttp3.RequestBody {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof RequestBody;
+        return o instanceof okhttp3.RequestBody;
     }
 
     @Nullable

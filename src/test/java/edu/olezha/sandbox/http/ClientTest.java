@@ -13,10 +13,11 @@ public class ClientTest {
     public void skipRequest() {
         HttpClient httpClient = spy(OkHttpClient.class);
 
+        okhttp3.RequestBody requestBody0 = okhttp3.RequestBody.create(JSON, "");
         RequestBody requestBody = new RequestBody(okhttp3.RequestBody.create(JSON, ""));
         RequestBody requestBody2 = new RequestBody(okhttp3.RequestBody.create(JSON, ""));
         httpClient.post("https://init", requestBody);
-        httpClient.post("https://event", requestBody);
+        httpClient.post("https://event", requestBody0);
 
         verify(httpClient, times(1)).post("https://event", requestBody2);
     }
